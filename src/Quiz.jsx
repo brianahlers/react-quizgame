@@ -45,11 +45,36 @@ const Quiz = () => {
         <div>
             <h1>Quiz</h1>
             <h2>{questionText}</h2>
-            {currentQuestion && currentQuestion.options.map((option, index) => (
-                <Question key={index} question={question} />
+            {currentQuestion && currentQuestion.options && currentQuestion.options.map((option, index) => (
+                <button
+                    key={index}
+                    onClick={
+                        () => handleAnswerSelection(option)}
+                >
+                    {option}
+                </button>
             ))}
         </div>
     );
+};
+
+const Timer = ({ timeLimit, onTimeUp }) => {
+    const [timeLeft, setTimeLeft] = useState(timeLimit);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setTimeLeft(timeLeft - 1);
+        }, 1000);
+
+        if (timeLeft === 0) {
+            clearInterval(interval);
+            onTimeUp();
+        }
+
+        return () => clearInterval(interval);
+    }, [timeLeft, onTimeUp]);
+
+    return <div>{timeLeft} seconds left</div>
 };
 
 export default Quiz;

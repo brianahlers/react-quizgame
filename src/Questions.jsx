@@ -2,7 +2,7 @@
 
 const questions = [
     {
-        questionText: "What is the only mammal capable of true sustained flight?",
+        question: "What is the only mammal capable of true sustained flight?",
         answers: ["Flying Squirrel", "Bat", "Sugar Glider", "Colugo"],
         correctIndex: 1
     },
@@ -106,7 +106,7 @@ const questions = [
         answers: ["Beijing", "Shanghai", "Hong Kong", "Shenzhen"],
         correctIndex: 0
     },
-
+    
 ]
 
 export default questions
