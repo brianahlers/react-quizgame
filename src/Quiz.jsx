@@ -8,7 +8,7 @@ const Quiz = () => {
 
     useEffect(() => {
         const selectQuestions = () => {
-            const shuffledQuestions = questions.sort(() => 0.5 - Math.random());
+            const shuffledQuestions = [...questions].sort(() => 0.5 - Math.random());
             const selected = shuffledQuestions.slice(0, 10);
             setSelectedQuestions(selected);
         };
@@ -43,9 +43,9 @@ const Quiz = () => {
 
     return (
         <div>
-            <h1>Quiz</h1>
+            <h1>Quiz h1 element</h1>
             <h2>{questionText}</h2>
-            {currentQuestion && currentQuestion.options && currentQuestion.options.map((option, index) => (
+            {currentQuestion && currentQuestion.answers && currentQuestion.answers.map((option, index) => (
                 <button
                     key={index}
                     onClick={
