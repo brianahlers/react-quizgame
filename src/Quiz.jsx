@@ -7,6 +7,14 @@ const Quiz = () => {
     const [score, setScore] = useState(0);
 
     useEffect(() => {
+        const interval = setInterval(() => {
+            setTimer((prevTimer) => prevTimer - 1);
+        }, 1000);
+
+        return () => { clearInterval(interval) }
+    }, []);
+
+    useEffect(() => {
         const selectQuestions = () => {
             const shuffledQuestions = [...questions].sort(() => 0.5 - Math.random());
             const selected = shuffledQuestions.slice(0, 10);
@@ -18,8 +26,12 @@ const Quiz = () => {
 
     const handleAnswerSelection = (selectedAnswer) => {
         const correctAnswer = selectedQuestions[currentQuestionIndex].correctAnswer;
-        if (selectedAnswer === correctAnswer) {
-            setScore(score + 1);
+        let isCorrect = selectedAnswer === correctAnswer;
+
+        setIsAnswerCorrect(isCorrect);
+
+        if (isCorrect) {
+            setScore((prevScore) => prevScore + 1);
         }
 
         const nextQuestionIndex = currentQuestionIndex + 1;
@@ -32,6 +44,7 @@ const Quiz = () => {
 
     const endQuiz = () => {
         saveScoreAndDisplayLeaderboard();
+        setShowResult(true);
     };
 
     const saveScoreAndDisplayLeaderboard = () => {
@@ -43,17 +56,22 @@ const Quiz = () => {
 
     return (
         <div>
+            {/* <Timer timeLimit={120} onTimeUp={endQuiz} /> */}
             <h1>Quiz h1 element</h1>
             <h2>{questionText}</h2>
-            {currentQuestion && currentQuestion.answers && currentQuestion.answers.map((option, index) => (
-                <button
-                    key={index}
-                    onClick={
-                        () => handleAnswerSelection(option)}
-                >
-                    {option}
-                </button>
-            ))}
+            {currentQuestion
+                && 
+                currentQuestion.answers
+                &&
+                currentQuestion.answers.map((option, index) => (
+                    <button
+                        key={index}
+                        onClick={
+                            () => handleAnswerSelection(option)}
+                    >
+                        {option}
+                    </button>
+                ))}
         </div>
     );
 };
