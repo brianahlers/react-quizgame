@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import questions from './Questions';
+import 'tailwindcss/tailwind.css';
 
-const Quiz = () => {
+function Quiz() {
     const [selectedQuestions, setSelectedQuestions] = useState([]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [score, setScore] = useState(0);
@@ -11,7 +12,7 @@ const Quiz = () => {
             setTimer((prevTimer) => prevTimer - 1);
         }, 1000);
 
-        return () => { clearInterval(interval) }
+        return () => { clearInterval(interval); };
     }, []);
 
     useEffect(() => {
@@ -48,7 +49,7 @@ const Quiz = () => {
     };
 
     const saveScoreAndDisplayLeaderboard = () => {
-        console.log(`Your score is ${score}`)
+        console.log(`Your score is ${score}`);
     };
 
     const currentQuestion = selectedQuestions[currentQuestionIndex];
@@ -60,21 +61,19 @@ const Quiz = () => {
             <h1>Quiz h1 element</h1>
             <h2>{questionText}</h2>
             {currentQuestion
-                && 
+                &&
                 currentQuestion.answers
                 &&
                 currentQuestion.answers.map((option, index) => (
                     <button
                         key={index}
-                        onClick={
-                            () => handleAnswerSelection(option)}
-                    >
+                        onClick={() => handleAnswerSelection(option)}>
                         {option}
                     </button>
                 ))}
         </div>
     );
-};
+}
 
 const Timer = ({ timeLimit, onTimeUp }) => {
     const [timeLeft, setTimeLeft] = useState(timeLimit);
